@@ -31,3 +31,42 @@ class Animal(models.Model):
 
     def __str__(self):
         return self.nome
+
+class RegistroVeterinario(models.Model):
+
+    class Tipo(models.TextChoices):
+        CONSULTA = 'Consulta', 'Consulta'
+        VACINA = 'Vacina', 'Vacina'
+        EXAME = 'Exame', 'Exame'
+        TRATAMENTO = 'Tratamento', 'Tratamento'
+
+    animal = models.ForeignKey(
+        Animal,
+        on_delete=models.CASCADE,
+        related_name='registros_veterinarios'
+    )
+
+    data_registro = models.DateField()
+
+    tipo = models.CharField(
+        max_length=20,
+        choices=Tipo.choices
+    )
+
+    descricao = models.TextField()
+
+    profissional_responsavel = models.CharField(
+        max_length=100,
+        blank=True
+    )
+
+    data_retorno = models.DateField(
+        null=True,
+        blank=True
+    )
+
+    class Meta:
+        ordering = ['-data_registro']
+
+    def __str__(self):
+        return f'{self.tipo} - {self.animal.nome}'
