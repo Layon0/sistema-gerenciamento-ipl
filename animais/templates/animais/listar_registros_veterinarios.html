@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Histórico Veterinário</title>
+</head>
+<body>
+    <h1>Histórico Veterinário</h1>
+
+    <h2>Animal: {{ animal.nome }}</h2>
+
+    <a href="{% url 'cadastrar_registro_veterinario' animal.id %}">
+        Novo registro
+    </a>
+
+    <a href="{% url 'listar_animais' %}">
+        Voltar para animais
+    </a>
+
+    {% for registro in registros %}
+        <hr>
+
+        <h3>{{ registro.get_tipo_display }}</h3>
+
+        <p>Data: {{ registro.data_registro|date:"d/m/Y" }}</p>
+        <p>Descrição: {{ registro.descricao }}</p>
+        <p>Profissional: {{ registro.profissional_responsavel|default:"Não informado" }}</p>
+
+        {% if registro.data_retorno %}
+            <p>Retorno: {{ registro.data_retorno|date:"d/m/Y" }}</p>
+        {% endif %}
+    {% empty %}
+        <p>Nenhum registro veterinário cadastrado.</p>
+    {% endfor %}
+</body>
+</html>

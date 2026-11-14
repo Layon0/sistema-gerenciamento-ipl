@@ -1,6 +1,6 @@
 
 from django import forms
-from .models import Animal
+from .models import Animal, RegistroVeterinario
 
 
 class AnimalForm(forms.ModelForm):
@@ -26,5 +26,28 @@ class AnimalForm(forms.ModelForm):
             ),
             'descricao': forms.Textarea(
                 attrs={'rows': 3}
+            ),
+        }
+class RegistroVeterinarioForm(forms.ModelForm):
+
+    class Meta:
+        model = RegistroVeterinario
+        fields = [
+            'data_registro',
+            'tipo',
+            'descricao',
+            'profissional_responsavel',
+            'data_retorno',
+        ]
+
+        widgets = {
+            'data_registro': forms.DateInput(
+                attrs={'type': 'date'}
+            ),
+            'data_retorno': forms.DateInput(
+                attrs={'type': 'date'}
+            ),
+            'descricao': forms.Textarea(
+                attrs={'rows': 4}
             ),
         }
