@@ -70,3 +70,54 @@ class RegistroVeterinario(models.Model):
 
     def __str__(self):
         return f'{self.tipo} - {self.animal.nome}'
+
+class Interessado(models.Model):
+    nome = models.CharField(max_length=100)
+    email = models.EmailField()
+    telefone = models.CharField(max_length=20)
+    data_cadastro = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.nome
+
+
+class ProcessoAdocao(models.Model):
+
+    class Status(models.TextChoices):
+        INTERESSE = 'Interesse', 'Interesse'
+        ANALISE = 'Em análise', 'Em análise'
+        ENTREVISTA = 'Entrevista', 'Entrevista'
+        VISITA = 'Visita', 'Visita'
+        APROVADO = 'Aprovado', 'Aprovado'
+        CONCLUIDO = 'Concluído', 'Concluído'
+        ENCERRADO = 'Encerrado', 'Encerrado'
+
+    animal = models.ForeignKey(
+        Animal,
+        on_delete=models.PROTECT,
+        related_name='processos_adocao'
+    )
+
+    interessado = models.ForeignKey(
+        Interessado,
+        on_delete=models.PROTECT,
+        related_name='processos_adocao'
+    )
+
+    data_solicitacao = models.DateField(auto_now_add=True)
+
+    status = models.CharField(
+        max_length=20,
+        choices=Status.choices,
+        default=Status.INTERESSE
+    )
+
+    observacoes = models.TextField(blank=True)
+
+    data_conclusao = models.DateField(
+        null=True,
+        blank=True
+    )
+
+    def __str__(self):
+        return f'{self.interessado.nome} - {self.animal.nome}'
