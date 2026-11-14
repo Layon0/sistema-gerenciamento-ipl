@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Processos de adoção</title>
+</head>
+<body>
+    <h1>Processos de adoção</h1>
+
+    <ul>
+        {% for processo in processos %}
+            <li>
+                <strong>Animal:</strong> {{ processo.animal.nome }}<br>
+                <strong>Interessado:</strong> {{ processo.interessado.nome }}<br>
+                <strong>Status:</strong> {{ processo.get_status_display }}<br>
+                <strong>Solicitação:</strong> {{ processo.data_solicitacao }}
+            </li>
+        {% empty %}
+            <li>Nenhum processo de adoção cadastrado.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'listar_animais' %}">Voltar aos animais</a>
+</body>
+</html>

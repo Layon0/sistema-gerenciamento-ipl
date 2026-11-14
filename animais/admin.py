@@ -1,6 +1,11 @@
 
 from django.contrib import admin
-from .models import Animal, RegistroVeterinario
+from .models import (
+    Animal,
+    RegistroVeterinario,
+    Interessado,
+    ProcessoAdocao,
+)
 
 
 @admin.register(Animal)
@@ -38,3 +43,37 @@ class RegistroVeterinarioAdmin(admin.ModelAdmin):
     )
 
     ordering = ('-data_registro',)
+
+@admin.register(Interessado)
+class InteressadoAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'nome',
+        'email',
+        'telefone',
+        'data_cadastro',
+    )
+
+    search_fields = ('nome', 'email', 'telefone')
+    ordering = ('nome',)
+
+
+@admin.register(ProcessoAdocao)
+class ProcessoAdocaoAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'animal',
+        'interessado',
+        'status',
+        'data_solicitacao',
+        'data_conclusao',
+    )
+
+    list_filter = ('status', 'data_solicitacao')
+    search_fields = (
+        'animal__nome',
+        'interessado__nome',
+        'interessado__email',
+    )
+
+    ordering = ('-data_solicitacao',)

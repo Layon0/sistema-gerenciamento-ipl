@@ -19,4 +19,24 @@ urlpatterns = [
         views.cadastrar_registro_veterinario,
         name='cadastrar_registro_veterinario'
     ),
+    path(
+    'interessados/',
+    views.listar_interessados,
+    name='listar_interessados'
+    ),
+    path(
+        'interessados/cadastrar/',
+        views.cadastrar_interessado,
+        name='cadastrar_interessado'
+    ),
+    path(
+        'processos-adocao/',
+        views.listar_processos_adocao,
+        name='listar_processos_adocao'
+    ),
+    path(
+        '<int:animal_id>/iniciar-adocao/',
+        views.cadastrar_processo_adocao,
+        name='cadastrar_processo_adocao'
+    ),
 ]

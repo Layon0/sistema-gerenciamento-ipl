@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Interessados em adoção</title>
+</head>
+<body>
+    <h1>Interessados em adoção</h1>
+
+    <a href="{% url 'cadastrar_interessado' %}">
+        Cadastrar interessado
+    </a>
+
+    <ul>
+        {% for interessado in interessados %}
+            <li>
+                {{ interessado.nome }} -
+                {{ interessado.email }} -
+                {{ interessado.telefone }}
+            </li>
+        {% empty %}
+            <li>Nenhum interessado cadastrado.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'listar_animais' %}">Voltar aos animais</a>
+</body>
+</html>

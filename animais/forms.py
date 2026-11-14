@@ -1,6 +1,11 @@
 
 from django import forms
-from .models import Animal, RegistroVeterinario
+from .models import (
+    Animal,
+    RegistroVeterinario,
+    Interessado,
+    ProcessoAdocao,
+)
 
 
 class AnimalForm(forms.ModelForm):
@@ -50,4 +55,52 @@ class RegistroVeterinarioForm(forms.ModelForm):
             'descricao': forms.Textarea(
                 attrs={'rows': 4}
             ),
+        }
+
+class InteressadoForm(forms.ModelForm):
+    class Meta:
+        model = Interessado
+        fields = [
+            'nome',
+            'email',
+            'telefone',
+        ]
+
+        widgets = {
+            'nome': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Nome completo',
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'email@exemplo.com',
+            }),
+            'telefone': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': '(00) 00000-0000',
+            }),
+        }
+
+
+class ProcessoAdocaoForm(forms.ModelForm):
+    class Meta:
+        model = ProcessoAdocao
+        fields = [
+            'interessado',
+            'status',
+            'observacoes',
+        ]
+
+        widgets = {
+            'interessado': forms.Select(attrs={
+                'class': 'form-select',
+            }),
+            'status': forms.Select(attrs={
+                'class': 'form-select',
+            }),
+            'observacoes': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4,
+                'placeholder': 'Observações sobre o processo de adoção',
+            }),
         }
