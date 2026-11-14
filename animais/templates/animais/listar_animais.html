@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animais cadastrados | Patas e Lares</title>
+</head>
+<body>
+    <h1>Animais cadastrados</h1>
+
+    <a href="{% url 'cadastrar_animal' %}">
+        Cadastrar novo animal
+    </a>
+
+    <hr>
+
+    {% if animais %}
+        <table border="1" cellpadding="8">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Espécie</th>
+                    <th>Sexo</th>
+                    <th>Data de entrada</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for animal in animais %}
+                    <tr>
+                        <td>{{ animal.nome }}</td>
+                        <td>{{ animal.especie }}</td>
+                        <td>{{ animal.sexo|default:"Não informado" }}</td>
+                        <td>{{ animal.data_entrada|date:"d/m/Y" }}</td>
+                        <td>{{ animal.status }}</td>
+                        <td>
+                            <a href="{% url 'editar_animal' animal.id %}">
+                                Editar
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Nenhum animal cadastrado até o momento.</p>
+    {% endif %}
+</body>
+</html>

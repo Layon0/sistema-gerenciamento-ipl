@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de animal | Patas e Lares</title>
+</head>
+<body>
+    <h1>
+        {% if animal %}
+            Editar animal
+        {% else %}
+            Cadastrar animal
+        {% endif %}
+    </h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">Salvar</button>
+    </form>
+
+    <p>
+        <a href="{% url 'listar_animais' %}">
+            Voltar para a lista
+        </a>
+    </p>
+</body>
+</html>
