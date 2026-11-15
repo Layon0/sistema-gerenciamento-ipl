@@ -1,0 +1,120 @@
+
+<div class="accessibility-tools" aria-label="Controles de acessibilidade">
+    <span class="accessibility-title">Acessibilidade:</span>
+
+    <button type="button" id="diminuir-fonte"
+            aria-label="Diminuir tamanho da fonte"
+            title="Diminuir fonte">
+        A−
+    </button>
+
+    <button type="button" id="aumentar-fonte"
+            aria-label="Aumentar tamanho da fonte"
+            title="Aumentar fonte">
+        A+
+    </button>
+
+    <button type="button" id="restaurar-fonte"
+            aria-label="Restaurar tamanho padrão da fonte"
+            title="Restaurar fonte">
+        A
+    </button>
+
+    <span id="estado-fonte" aria-live="polite">
+        Tamanho padrão
+    </span>
+</div>
+
+<style>
+    .accessibility-tools {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #555;
+        border-radius: 8px;
+        background: #f2f2f2;
+        color: #111;
+    }
+
+    .accessibility-tools button {
+        min-width: 44px;
+        min-height: 44px;
+        padding: 8px 12px;
+        border: 2px solid #333;
+        border-radius: 5px;
+        background: #fff;
+        color: #111;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .accessibility-tools button:hover {
+        background: #ddd;
+    }
+
+    .accessibility-tools button:focus-visible {
+        outline: 3px solid #005fcc;
+        outline-offset: 3px;
+    }
+</style>
+
+<script>
+(function () {
+    const raiz = document.documentElement;
+    const minimo = 14;
+    const maximo = 24;
+    const padrao = 16;
+
+    const botaoDiminuir = document.getElementById('diminuir-fonte');
+    const botaoAumentar = document.getElementById('aumentar-fonte');
+    const botaoRestaurar = document.getElementById('restaurar-fonte');
+    const estado = document.getElementById('estado-fonte');
+
+    let tamanho = padrao;
+
+    try {
+        const salvo = Number(localStorage.getItem('tamanhoFonteIPL'));
+
+        if (salvo >= minimo && salvo <= maximo) {
+            tamanho = salvo;
+        }
+    } catch (erro) {
+        console.warn('Não foi possível recuperar a preferência de fonte.');
+    }
+
+    function atualizarFonte() {
+        raiz.style.fontSize = tamanho + 'px';
+
+        estado.textContent = tamanho === padrao
+            ? 'Tamanho padrão'
+            : 'Fonte: ' + tamanho + ' px';
+
+        try {
+            localStorage.setItem('tamanhoFonteIPL', tamanho);
+        } catch (erro) {
+            console.warn('Não foi possível salvar a preferência de fonte.');
+        }
+    }
+
+    botaoDiminuir.addEventListener('click', function () {
+        tamanho = Math.max(minimo, tamanho - 2);
+        atualizarFonte();
+    });
+
+    botaoAumentar.addEventListener('click', function () {
+        tamanho = Math.min(maximo, tamanho + 2);
+        atualizarFonte();
+    });
+
+    botaoRestaurar.addEventListener('click', function () {
+        tamanho = padrao;
+        atualizarFonte();
+    });
+
+    atualizarFonte();
+})();
+</script>
