@@ -11,3 +11,13 @@ db.sqlite3
 
 # Variáveis de ambiente
 .env
+
+# Arquivos estáticos gerados
+staticfiles/
+
+# Relatórios e dados de cobertura
+.coverage
+htmlcov/
+
+# Arquivos temporários
+*.log
