@@ -39,10 +39,22 @@
                         <td>{{ animal.data_entrada|date:"d/m/Y" }}</td>
                         <td>{{ animal.status }}</td>
                         <td>
-                            <a href="{% url 'editar_animal' animal.id %}">
-                                Editar
-                            </a>
-                        </td>
+    <a href="{% url 'editar_animal' animal.id %}">
+        Editar
+    </a>
+
+    |
+
+    <a href="{% url 'listar_registros_veterinarios' animal.id %}">
+        Histórico veterinário
+    </a>
+
+    |
+
+    <a href="{% url 'cadastrar_processo_adocao' animal.id %}">
+        Iniciar adoção
+    </a>
+</td>
                     </tr>
                 {% endfor %}
             </tbody>
